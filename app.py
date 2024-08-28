@@ -12,6 +12,11 @@ import json
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return render_template('index.html')
+
+
 load_dotenv()
 
 # Load environment variables
@@ -123,13 +128,8 @@ def handle_new_query(query):
     # Return the AI's response (you can also return the updated conversation history if needed)
     return llm_with_tools.invoke(conversation_history)
 
-@app.route('/')
-def index():
-    return render_template('index.html')
 
-@app.route("/home", methods=['POST'])
-def home():
-    return "Hello, this is your AI chatbot!"
+
 
 @app.route('/chat', methods=['POST'])
 def chat():
