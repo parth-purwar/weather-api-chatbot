@@ -30,9 +30,15 @@ class TimeOption(Enum):
     OPTION_2 = "single date"
     OPTION_3 = "multi date"
 
+
 @tool
 def weather(location, time: TimeOption, start_date : date, end_date : date):
-    """Getting Latitude and longitude from the location name"""
+    """Take the location and fetch the lat and lon from the geocode api, 
+        then take that and the date information.
+        Base on the TimeOption, select the type of API call.
+        Then make the API call.
+        Finally return the output, interpret the response in human language
+    """
     loc_url = "https://geocode.maps.co/search"
     loc_params = {
         "q": location,
@@ -103,7 +109,7 @@ def handle_new_query(query):
     global conversation_history
     #just these 2 existing here solves out date issue
     metadata = datetime.now().date()
-    system_message = SystemMessage(f"If relevant, use {metadata} as the current date. and always show this date in response")
+    system_message = SystemMessage(f"Do not retuen Empty response and say something. Also, if relevant, use {metadata} as the current date.")
     # Add the new query to the conversation history
     conversation_history.append(HumanMessage(query))
     conversation_history.append(system_message)
